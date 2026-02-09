@@ -1,22 +1,22 @@
 /**
  * CXone Guide Configuration
- * Paste your specific snippet details here.
+ * This file initializes the CXone modules.
  */
 
-(function(c, x, o, n, e) {
-    // This is a standard loader pattern for Guide
-    // You can replace the interior of this function with your actual snippet loader
-    // OR just ensure your script is loaded in the HTML.
-    
-    // For now, let's assume you'll paste the standard snippet here:
-    /*
-    (function(i,s,o,g,r,a,m){i['CXOneGuide']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://guide.nicecxone.com/loader.js','cxone');
-    
-    cxone('init', 'YOUR_TENANT_ID', 'YOUR_APP_ID');
-    */
-    
-    console.log('MedPulse: CXone Guide Config Loaded. Please ensure you have added your Tenant ID and App ID in js/guide-config.js');
-})(window, document);
+(function(n, u) {
+    window.CXoneDfo = n;
+    window[n] = window[n] || function() {
+        (window[n].q = window[n].q || []).push(arguments);
+    };
+    window[n].u = u;
+    var e = document.createElement("script");
+    e.type = "module";
+    e.src = u + "?" + Math.round(Date.now() / 1e3 / 3600);
+    document.head.appendChild(e);
+})('cxone', 'https://web-modules-de-na1.niceincontact.com/loader/1/loader.js');
+
+// Initialize the Tenant and the Guide module
+cxone('init', '1092');
+cxone('guide', 'init', 'bb179a83-f2c6-4fb8-a020-1af5eb9d759f');
+
+console.log('MedPulse: CXone Guide Initialized with Tenant 1092');
