@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Support | MedPulse Health</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+    <!-- CXone Guide Snippet -->
+    <script src="js/guide-config.js"></script>
+    <script src="js/guide-integration.js"></script>
+</head>
+<body class="bg-slate-50 text-slate-900">
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between h-16 items-center">
+            <span class="text-2xl font-bold text-blue-600">MedPulse</span>
+            <div class="hidden md:flex space-x-8">
+                <a href="index.html" class="text-slate-600 hover:text-blue-600 transition">Home</a>
+                <a href="services.html" class="text-slate-600 hover:text-blue-600 transition">Services</a>
+                <a href="support.html" class="text-blue-600 font-semibold border-b-2 border-blue-600 pb-1">Patient Support</a>
+            </div>
+            <button class="bg-blue-600 text-white px-5 py-2 rounded-full font-medium">Portal</button>
+        </div>
+    </nav>
+
+    <main class="py-20">
+        <div class="max-w-3xl mx-auto px-4">
+            <h1 class="text-4xl font-bold mb-8 text-center">How can we help you today?</h1>
+            
+            <div class="space-y-6">
+                <!-- FAQ Item -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                    <h3 class="font-bold text-lg mb-2">How do I book an appointment?</h3>
+                    <p class="text-slate-600">You can book directly through the Patient Portal or by calling our central booking line. If you need immediate assistance, use the chat icon on this page.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                    <h3 class="font-bold text-lg mb-2">What insurance plans do you accept?</h3>
+                    <p class="text-slate-600">We accept most major insurance providers including SA Health, Medicare, and private health funds. Please check our billing section for a full list.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                    <h3 class="font-bold text-lg mb-2">Can I get my results online?</h3>
+                    <p class="text-slate-600">Yes, all pathology and radiology results are uploaded to the Patient Portal within 24-48 hours of your appointment.</p>
+                </div>
+            </div>
+
+            <div class="mt-16 bg-white p-10 rounded-3xl border-2 border-dashed border-blue-200 text-center">
+                <h2 class="text-2xl font-bold mb-4 text-slate-800">Need to speak with someone?</h2>
+                <p class="text-slate-600 mb-8">Our Patient Care Coordinators are available to help with complex inquiries or urgent bookings.</p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <button onclick="trackSupportAction('call_support')" class="flex items-center justify-center gap-2 bg-slate-900 text-white px-6 py-3 rounded-xl font-bold hover:bg-slate-800 transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 005.405 5.405l.773-1.548a1 1 0 011.06-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                        </svg>
+                        1800-MED-PULSE
+                    </button>
+                    <!-- This button can be used to explicitly trigger a Guide engagement if desired -->
+                    <button onclick="cxone('showEngagement', 'SUPPORT_CHAT')" class="flex items-center justify-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-blue-700 transition shadow-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clip-rule="evenodd" />
+                        </svg>
+                        Start Live Chat
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-slate-900 text-slate-400 py-12">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p>&copy; 2026 MedPulse Healthcare. Powered by CXone Guide.</p>
+        </div>
+    </footer>
+</body>
+</html>
