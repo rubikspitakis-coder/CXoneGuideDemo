@@ -15,8 +15,13 @@
     document.head.appendChild(e);
 })('cxone', 'https://web-modules-de-na1.niceincontact.com/loader/1/loader.js');
 
-// Initialize the Tenant and the Guide module
+// Initialize the Tenant
 cxone('init', '1092');
+
+// Initialize Analytics explicitly
+cxone('analytics', 'init', '1092');
+
+// Initialize Guide
 cxone('guide', 'init', 'bb179a83-f2c6-4fb8-a020-1af5eb9d759f');
 
-console.log('MedPulse: CXone Guide Initialized with Tenant 1092');
+console.log('MedPulse: CXone Guide & Analytics Initialized with Tenant 1092');
