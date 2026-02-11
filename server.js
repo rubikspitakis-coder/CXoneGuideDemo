@@ -9,45 +9,49 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '.')));
 
 /**
- * CXone Automation Trigger Endpoint
+ * 1. CXone Automation Trigger Endpoint
+ * This is used to "bridge" the gap because the CXone UI 
+ * sometimes hides custom fields in Automation Triggers.
  */
 app.post('/api/check-cardiology', (req, res) => {
     try {
         const payload = req.body;
-        console.log('--- New CXone Trigger Request ---');
+        console.log('--- Automation Trigger Request ---');
         
         let isCardiology = false;
         let fields = [];
 
-        // Navigate the CXone payload structure (Contact > CustomFields)
         if (payload.contact && Array.isArray(payload.contact.customFields)) {
             fields = payload.contact.customFields;
         } else if (Array.isArray(payload.customFields)) {
             fields = payload.customFields;
         }
 
-        // Find the specific field by 'ident'
         const interestField = fields.find(f => f.ident === 'interested_service');
         
-        if (interestField) {
-            console.log(`Found field: ${interestField.ident} = ${interestField.value}`);
-            if (interestField.value === 'cardiology') {
-                isCardiology = true;
-            }
-        } else {
-            console.log('Field "interested_service" not found in payload.');
-            console.log('Available fields:', fields.map(f => f.ident).join(', '));
+        if (interestField && interestField.value === 'cardiology') {
+            isCardiology = true;
         }
 
         console.log(`Decision: Is Cardiology? ${isCardiology}`);
-        
-        // CXone custom condition expects a 200 OK with boolean body
         res.status(200).send(isCardiology);
         
     } catch (error) {
-        console.error('Error processing trigger:', error);
-        res.status(200).send(false); // Fallback to false
+        console.error('Error in /api/check-cardiology:', error);
+        res.status(200).send(false);
     }
+});
+
+/**
+ * 2. CXone Guide "External API Call" Endpoint
+ * Use this in a Guide Rule to show a "VIP" proactive offer.
+ * URL: https://[your-url]/api/is-vip
+ */
+app.get('/api/is-vip', (req, res) => {
+    // In a real scenario, you'd check a database or cookie.
+    // For the demo, we always return true to fire the rule.
+    console.log('--- Guide Rule API Call: checking VIP status ---');
+    res.status(200).send(true);
 });
 
 app.get('*', (req, res) => {
