@@ -5,55 +5,51 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware to parse JSON bodies (CXone sends JSON)
 app.use(bodyParser.json());
-
-// Serve static files (Your MedPulse Website)
 app.use(express.static(path.join(__dirname, '.')));
 
 /**
  * CXone Automation Trigger Endpoint
- * URL: https://[your-railway-url]/api/check-cardiology
- * 
- * CXone sends the Case object payload.
- * We check if the custom field 'interested_service' equals 'cardiology'.
  */
 app.post('/api/check-cardiology', (req, res) => {
     try {
-        const caseData = req.body;
-        console.log('Received CXone Trigger Request:', JSON.stringify(caseData));
-
-        // Logic: Check if the custom field matches 'cardiology'
-        // Note: The payload structure varies slightly by DFO version, 
-        // but custom_fields usually live in the root or 'custom_fields' object.
+        const payload = req.body;
+        console.log('--- New CXone Trigger Request ---');
         
         let isCardiology = false;
+        let fields = [];
+
+        // Navigate the CXone payload structure (Contact > CustomFields)
+        if (payload.contact && Array.isArray(payload.contact.customFields)) {
+            fields = payload.contact.customFields;
+        } else if (Array.isArray(payload.customFields)) {
+            fields = payload.customFields;
+        }
+
+        // Find the specific field by 'ident'
+        const interestField = fields.find(f => f.ident === 'interested_service');
         
-        // Check standard location
-        if (caseData.custom_fields && caseData.custom_fields.interested_service === 'cardiology') {
-            isCardiology = true;
-        } 
-        // Check flat structure (sometimes seen in triggers)
-        else if (caseData.interested_service === 'cardiology') {
-            isCardiology = true;
+        if (interestField) {
+            console.log(`Found field: ${interestField.ident} = ${interestField.value}`);
+            if (interestField.value === 'cardiology') {
+                isCardiology = true;
+            }
+        } else {
+            console.log('Field "interested_service" not found in payload.');
+            console.log('Available fields:', fields.map(f => f.ident).join(', '));
         }
 
         console.log(`Decision: Is Cardiology? ${isCardiology}`);
         
-        // Return boolean as text (standard for some CXone custom conditions) 
-        // or JSON boolean depending on what your specific tenant expects.
-        // Usually, a 200 OK with "true" body works best.
-        res.send(isCardiology);
+        // CXone custom condition expects a 200 OK with boolean body
+        res.status(200).send(isCardiology);
         
     } catch (error) {
         console.error('Error processing trigger:', error);
-        res.status(500).send(false);
+        res.status(200).send(false); // Fallback to false
     }
 });
 
-/**
- * Fallback Route
- */
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
