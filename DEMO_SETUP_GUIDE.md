@@ -15,10 +15,11 @@ This project is a high-fidelity "MedPulse Healthcare" demo site designed to show
 
 To make the "Cardiology" interest appear as a tag on the Agent Desktop, follow these steps in your CXone Admin:
 
-### 1. Create the Custom Field
-This ensures CXone "catches" the variable being sent from the website.
+### 1. Create the Custom Field (CASE Level)
+This ensures CXone "catches" the variable being sent from the website and attaches it to the current interaction.
 - **Path:** ACD > Digital > Settings > Custom Fields
 - **Action:** Create New
+- **Object:** **Case** (Crucial for Automation Rules)
 - **Name:** `Interested Service`
 - **Key:** `interested_service` (Must match JS exactly)
 - **Type:** Text
