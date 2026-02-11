@@ -8,6 +8,12 @@ const PORT = process.env.PORT || 3000;
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '.')));
 
+// Explicit routes for clean URLs
+app.get('/services', (req, res) => res.sendFile(path.join(__dirname, 'services.html')));
+app.get('/support', (req, res) => res.sendFile(path.join(__dirname, 'support.html')));
+app.get('/cardiology', (req, res) => res.sendFile(path.join(__dirname, 'cardiology.html')));
+app.get('/neurology', (req, res) => res.sendFile(path.join(__dirname, 'neurology.html')));
+
 /**
  * 1. CXone Automation Trigger Endpoint
  * This is used to "bridge" the gap because the CXone UI 
