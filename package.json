@@ -1,0 +1,16 @@
+{
+  "name": "medpulse-demo",
+  "version": "1.0.0",
+  "description": "CXone Guide Demo with Logic API",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "body-parser": "^1.20.2"
+  },
+  "engines": {
+    "node": "18.x"
+  }
+}
